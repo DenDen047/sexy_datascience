@@ -8,10 +8,9 @@ RUN mkdir /opt/notebooks
 RUN mkdir /workdir
 WORKDIR /workdir
 
-CMD [
-    "/opt/conda/bin/jupyter notebook",
-    "--notebook-dir=/opt/notebooks",
-    " --ip='*'",
-    "--port=8888",
-    "--no-browser"
-]
+CMD [\
+    "/opt/conda/bin/jupyter notebook",\
+    "--notebook-dir=/opt/notebooks",\
+    " --ip='*'",\
+    "--port=8888",\
+    "--no-browser"]
