@@ -65,13 +65,82 @@
 
 \section{重回帰分析}
 
+\subsection{利用したデータ}
+
 今回の分析では，説明変数として「nb\_views（その動画の視聴回数）」，「nb\_comments（動画に対して投稿されたコメント数）」，「runtime（動画の時間(秒)）」を利用した．
 目的変数として「nb\_votes（動画の平均評価値）」を利用した．
 この値は，動画に対して1ユーザーにつき，良かったか悪かったかどちらかを投票できる．
 nb\_votesは，良かった時を$1$，悪かった時を$-1$として，全投票の合計値である．
 
-データ数はそれぞれ$786121$個である．
+データ数はそれぞれ$786121$個ある．
 
-分析に用いた
+\subsection{重回帰分析結果}
+
+重回帰分析に用いたプログラムのソースコードを\ref{src:mra}に示す．
+プログラミング言語はPythonを利用した．
+
+各要素がnb\_votesに与える影響を詳しく知りたかったため，説明変数はすべて正規化している．
+
+\lstinputlisting[
+    language=Python,
+    caption=重回帰分析のプログラム,
+    label=src:mra
+]{figs/mra.py}
+
+出力結果を以下に示す．
+\begin{screen}
+\begin{verbatim}
+   nb_views  nb_comments   runtime  nb_votes
+0 -0.007029    -0.000810 -0.000202 -0.003661
+1 -0.008997          NaN -0.000240 -0.007272
+2 -0.008380    -0.009860 -0.000186 -0.006806
+3 -0.007574     0.003715  0.000474 -0.002380
+4 -0.005144    -0.006466  0.000234 -0.003079
+
+X shape: (786121, 3)
+Y shape: (786121,)
+
+   Coefficients         Name
+2     -0.008247      runtime
+1      0.332681  nb_comments
+0      0.431295     nb_views
+-1.1260282263925007e-20
+\end{verbatim}
+\end{screen}
+
+したがって，最終的に得られる回帰式は以下のようになる．
+ただし，$x_1$はnb\_views，$x_2$はnb\_comments，$x_3$はruntime，$y$はnb\_votesを示す．
+\begin{equation}
+    y = -1.13\times 10^{-20} + 0.43 x_1 + 0.33 x_2 - 0.008 x_3
+\end{equation}
+
+この結果からnb\_viewsが，nb\_votesに最も大きな影響を与えているのがわかる．
+一方で視聴回数(nb\_views)が多い場合，投票する人が増えるため，各作品を平等に評価できない可能性がある．
+同様に，コメント数(nb\_comments)もnb\_viewsに相関すると考えられる．
+
+以上のことから，説明変数同士の相関の影響が現れている可能性がある．
+説明変数同士の回帰分析を行うことで，nb\_votesに対する影響の詳細を知ることができる．
+
+またタグ情報もnb\_votesやnb\_viewsに対して，影響を及ぼしていることが考えられる．
+各タグに対する集計を取ることで，人気のタグがわかると予想される．
+
+
+\subsection{データ行列}
+
+重回帰分析を理解するために，
+説明変数のデータ行列をソースコード\ref{src:data}により求めた．
+
+\lstinputlisting[
+    language=Python,
+    caption=データ行列のプログラム,
+    label=src:data
+]{figs/data_matrix.py}
+
+出力結果を以下に示す．
+\begin{screen}
+\begin{verbatim}
+
+\end{verbatim}
+\end{screen}
 
 \end{document}
