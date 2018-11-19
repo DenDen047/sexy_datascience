@@ -16,7 +16,7 @@ xhamster_dataset.head()  # データを表示
 from sklearn import linear_model
 clf = linear_model.LinearRegression()
 
-# データの正規化
+# データの標準化
 dataset = xhamster_dataset[['nb_views', 'nb_comments', 'runtime', 'nb_votes']]
 dataset = dataset.apply(lambda x: (x - np.mean(x)) / (np.max(x) - np.min(x)))
 print(dataset.head())
