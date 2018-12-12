@@ -1,32 +1,19 @@
-FROM continuumio/anaconda
+FROM python:3.6
 
-# jupyter-notebook
-RUN /opt/conda/bin/conda install jupyter -y --quiet
+# init
+WORKDIR /root
+RUN apt-get update
+RUN pip install -U pip
 
-# jupyter therme
-RUN pip install lesscpy
-RUN pip install jupyterthemes
+# jupyter notebook
+RUN pip install jupyter
+ENV PATH $PATH:/env/bin
 
-# nbextensions_configurator
-RUN pip install jupyter_nbextensions_configurator
-RUN jupyter nbextensions_configurator enable --user
+# pip
+RUN pip install numpy
+RUN pip install scipy
+RUN pip install pandas
+RUN pip install matplotlib
+RUN pip install networkx
 
-# nbextensions
-WORKDIR /notebooks
-RUN pip install https://github.com/ipython-contrib/jupyter_contrib_nbextensions/tarball/master
-ENV NBEXTENSIONS_HOME /root/.local/share/jupyter/nbextensions
-RUN jupyter contrib nbextension install --user
-RUN jupyter nbextension enable /notebooks
-
-# others
-RUN /opt/conda/bin/conda install networkx -y --quiet
-
-# Open Ports for Jupyter
-EXPOSE 8888
-
-CMD /bin/bash -c "/opt/conda/bin/jupyter notebook \
-    --notebook-dir=/notebooks \
-     --ip='*' \
-    --port=8888 \
-    --no-browser \
-    --allow-root"
+WORKDIR /root
