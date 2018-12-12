@@ -8,10 +8,9 @@ NOTE_DIR=${PWD}/notebooks
 DATA_DIR=/data2/naoya/sexy_datascience
 
 docker run -it --rm \
-    -v ${PWD}:/workdir \
-    -v ${NOTE_DIR}:/opt/notebooks \
+    -v ${NOTE_DIR}:/notebooks \
     -v ${DATA_DIR}:/data \
+    -v ${PWD}/configs/.jupyter:/root/.jupyter \
     -w /workdir/${DIR} \
     -p 8888:8888 \
     denden047/datascience:jupyter
-# multiple_regression_analysis.ipynb
