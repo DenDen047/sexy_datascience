@@ -30,5 +30,6 @@ RUN pip install scipy
 RUN pip install pandas
 RUN pip install matplotlib
 RUN pip install networkx
+RUN pip install -U scikit-learn seaborn
 
 WORKDIR /root
